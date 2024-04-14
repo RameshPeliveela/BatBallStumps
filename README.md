@@ -1,4 +1,4 @@
-It is a simple game of Bat Ball and Stunps.
+It is a simple game of Bat Ball and Stumps.
 
 The Game is between User and Machine.
 
