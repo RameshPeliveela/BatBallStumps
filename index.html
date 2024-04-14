@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>Bat Ball Stumps</h1>
+    <button class="buttons" onclick="
+    computerChoice=computer();
+    resultmsg = result('bat', computerChoice);
+    show('bat', computerChoice, resultmsg);
+    "><img src="./images/bat.jpg" alt="bat" class="images"></button>
+
+    <button class="buttons" onclick="
+    computerChoice=computer();
+    resultmsg = result('ball', computerChoice);
+    show('ball', computerChoice, resultmsg);
+    "><img src="./images/ball.webp" alt="Ball" class="images"></button>
+
+    <button class="buttons" onclick="
+    computerChoice=computer();
+    resultmsg = result('stumps', computerChoice);
+    show('stumps', computerChoice, resultmsg);    
+    "><img src="./images/stumps.jpeg" alt="stumps" class="images"></button>
+
+
+    <h3 id="user-move"></h3>
+    <h3 id="computer-move"></h3>
+    <h3 id="result"></h3>
+    <div id="score"></div>
+    <br>
+    <button onclick="localStorage.clear(); scoreIntializing(null); show()" id="reset">Reset score</button>
+
+    <script>
+        
+        let score;
+        let scoreStr = localStorage.getItem('score');
+        scoreIntializing(scoreStr);
+
+        function scoreIntializing(str){
+            if(str===null){
+            score = {
+            win:0,
+            lose:0,
+            tie:0,
+        };
+        }
+
+        else{
+            score = JSON.parse(localStorage.getItem('score'));
+        }
+
+        score.displayScore = function()
+        {
+
+            return `won:${score.win}  lost:${score.lose}  tie:${score.tie}`;
+        }
+
+        }
+
+        let computerChoice;
+        let resultmsg;
+        show();
+        function computer(){
+            let num=Math.random()*3;
+            if(num>0 && num<=1){
+                return 'bat';
+            }
+            else if(num>1 && num<=2){
+                return 'ball';
+            }
+            else{
+                return 'stumps';
+            }
+        }
+        
+
+        function result(userMove, computerMove)
+        {
+            if(userMove==='bat')
+            {  
+                if(computerChoice==='ball'){
+                    score.win++;
+                    return 'you won';
+                }
+                else if(computerChoice==='stumps'){
+                    score.lose++;
+                    return 'computer won';
+                }
+                else if(computerChoice==='bat'){
+                    score.tie++;
+                    return 'TIE';
+                }
+            }
+
+            if(userMove==='ball'){
+                if(computerChoice==='ball'){
+                    score.tie++;
+                    return 'TIE';
+                }
+                else if(computerChoice==='stumps'){
+                    score.win++;
+                    return 'You Won';
+                }
+                else if(computerChoice==='bat'){
+                    score.lose++;
+                    return 'Computer Won';
+                }
+
+            }
+
+            if(userMove==='stumps'){
+                if(computerChoice==='ball'){
+                    score.lose++;  
+                    return 'Computer Won';
+                }
+                else if(computerChoice==='stumps'){
+                    score.tie++;
+                    return 'TIE';
+                }
+                else if(computerChoice==='bat'){
+                    score.win++;
+                    return 'You Won';
+                }
+
+            }
+        }
+
+        function show(usermove,computermove,resultmsg)
+        {
+            localStorage.setItem('score', JSON.stringify(score));
+
+            if(usermove===undefined||computermove===undefined){
+
+                document.querySelector('#user-move').innerText=``;
+                document.querySelector('#computer-move').innerText=``;
+                document.querySelector('#result').innerText=``;
+                document.querySelector('#score').innerText=`Score: ${score.displayScore()}`;
+            }
+            else{
+                
+                document.querySelector('#user-move').innerText=`You choosen ${usermove}`;
+                document.querySelector('#computer-move').innerText=`Computer choosen ${computermove}`;
+                document.querySelector('#result').innerText=`Result is ${resultmsg}`;
+                document.querySelector('#score').innerText=`Score: ${score.displayScore()}`;
+            }
+
+            // alert(`you choosen ${usermove}, computer choosen ${computermove} and the result is ${resultmsg}
+            // ${score.displayScore()}`);
+        }
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+body{
+    text-align: center;
+    
+}
+
+.buttons{
+    height: 150px;
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    
+    background-color: springgreen;
+}
+.images{
+    width: 100px;
+    height: 100px;
+}
+
+#reset{
+    height: 40px;
+    background-color: darkkhaki;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
